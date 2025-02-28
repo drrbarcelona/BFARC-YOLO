@@ -20,7 +20,7 @@ CORS(app)  # Enable CORS for all routes
 
 
 # Load YOLOv5 model from local file or Google Drive if not present
-model_path = r"D:\PhD_2021_2022\Paper_2\yolov5\runs\train\custom_training_06_b\weights\best.pt"
+model_path = "best.pt"
 if not os.path.exists(model_path):
     import gdown
     url = "https://drive.google.com/uc?id=YOUR_FILE_ID"  # Replace with Google Drive file ID
