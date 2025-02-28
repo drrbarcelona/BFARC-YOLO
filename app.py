@@ -38,6 +38,7 @@ if not os.path.exists(model_path):
 
 model = torch.hub.load('ultralytics/yolov5', 'custom', path=model_path, trust_repo=True, force_reload=False)
 
+
 @app.route('/predict', methods=['POST'])
 def predict():
     if 'file' not in request.files:
@@ -75,4 +76,6 @@ def predict():
     return send_file(img_io, mimetype='image/jpeg')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    port = int(os.environ.get("PORT", 10000))  # Use Render's assigned PORT
+    print(f"🚀 Running Flask on port {port}")
+    app.run(host='0.0.0.0', port=port, debug=True)
