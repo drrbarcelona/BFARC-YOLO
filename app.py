@@ -21,12 +21,22 @@ CORS(app)  # Enable CORS for all routes
 
 # Load YOLOv5 model from local file or Google Drive if not present
 model_path = "best.pt"
+print("🔍 Checking if best.pt exists...")
+
+if not os.path.exists(model_path):
+    print("❌ ERROR: best.pt NOT FOUND!")
+    exit(1)  # Stop execution if best.pt is missing
+else:
+    print("✅ best.pt found. Loading YOLOv5...")
+    model = torch.hub.load('ultralytics/yolov5', 'custom', path=model_path, trust_repo=True, force_reload=False)
+    print("✅ Model loaded successfully!")
+    
 if not os.path.exists(model_path):
     import gdown
     url = "https://drive.google.com/uc?id=YOUR_FILE_ID"  # Replace with Google Drive file ID
     gdown.download(url, model_path, quiet=False)
 
-model = torch.hub.load('ultralytics/yolov5', 'custom', path=model_path, force_reload=True)
+model = torch.hub.load('ultralytics/yolov5', 'custom', path=model_path, trust_repo=True, force_reload=False)
 
 @app.route('/predict', methods=['POST'])
 def predict():
