@@ -28,8 +28,20 @@ if not os.path.exists(model_path):
     exit(1)  # Stop execution if best.pt is missing
 else:
     print("✅ best.pt found. Loading YOLOv5...")
-    model = torch.hub.load('ultralytics/yolov5', 'custom', path=model_path, trust_repo=True, force_reload=False)
-    print("✅ Model loaded successfully!")
+    import torch
+import os
+
+# Define the cache directory for YOLOv5
+torch.hub.set_dir("/opt/render/.cache/torch/hub")  
+
+model = torch.hub.load(
+    'ultralytics/yolov5', 
+    'custom', 
+    path=model_path, 
+    trust_repo=True,  # Trust the repository
+    force_reload=False  # Prevent unnecessary downloads
+)
+print("✅ Model loaded successfully!")
     
 if not os.path.exists(model_path):
     import gdown
